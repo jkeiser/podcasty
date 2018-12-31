@@ -1,17 +1,23 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Transcript :transcripts="transcripts"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import transcript from '../podcast1.json'
+import Transcript from './components/Transcript'
 
 export default {
   name: 'app',
+  computed: {
+    transcripts: function() {
+      return transcript['results']
+    }
+  },
   components: {
-    HelloWorld
+    Transcript
   }
 }
 </script>
@@ -21,7 +27,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }

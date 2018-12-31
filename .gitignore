@@ -2,6 +2,10 @@
 node_modules
 /dist
 
+# secrets
+credentials.json
+podcast1.json
+
 # local env files
 .env.local
 .env.*.local

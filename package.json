@@ -8,7 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.5.21"
+    "loadjs": "^3.5.5",
+    "vue": "^2.5.21",
+    "vue-async-computed": "^3.5.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
