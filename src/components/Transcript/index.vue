@@ -1,7 +1,7 @@
 <template>
-  <div class="transcript">
+  <table class="transcript">
     <TranscriptPart v-for="(part, index) in transcriptParts" :key="index" :speaker="part.speaker" :words="part.words" />
-  </div>
+  </table>
 </template>
 
 <script>
@@ -23,8 +23,8 @@ export default {
   },
   computed: {
     transcriptParts: function() {
-      let parts = []
       let part = null
+      let parts = []
       for (let transcript of this.transcripts.map(this.topAlternative)) {
         for (let transcriptWord of transcript['words']) {
           if (!transcriptWord['speakerTag']) {
@@ -40,16 +40,21 @@ export default {
             part = { speaker, words: [] }
           }
 
-          part.words.push({
+          let word = {
             word: transcriptWord['word'],
             startTime: this.parseTime(transcriptWord['startTime']),
             endTime: this.parseTime(transcriptWord['endTime']),
             confidence: transcriptWord['confidence']
-          })
+          }
+          part.words.push(word)
 
-          if (transcriptWord['word'].endsWith('.') || transcriptWord['word'].endsWith('!') || transcriptWord['word'].endsWith('?')) {
-            parts.push(part)
-            part = { speaker, words: [] }
+          // Start a new part after 30 seconds.
+          if ((word.startTime - part.words[0].startTime) > 30) {
+            // Wait until a sentence break, though!
+            if (word.word.endsWith('.') || word.word.endsWith('!') || word.word.endsWith('?')) {
+              parts.push(part)
+              part = { speaker, words: [] }
+            }
           }
         }
       }
